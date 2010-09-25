@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+if ARGV.size != 1
+  puts "Usage: #{$PROGRAM_NAME} project"
+  exit -1
+end
+
+def create_padrino_project
+    project      = ARGV.shift
+    project_name = project.gsub(/[-.]/, '_').downcase
+    cmd          = "source ~/.gem-padrino/.gem-padrino-bash; padrino g project #{project} -t riot -d sequel -s jquery -e haml --app=#{project_name} -c compass -i; cd #{project}; bundle install --path=vendor; bundle install --binstubs"
+    printed_cmd  = cmd.gsub(/; ?/, "\n").gsub(/\-\-(\w)/, "\n  --\\1").gsub(/ [-](\w)/, "\n  -\\1")
+    puts printed_cmd
+    system cmd
+end
+
+def gem_dir
+  File.join(ENV['HOME'], ".gem-padrino")
+end
+def gem_rc
+  File.join(gem_dir, ".gem-padrino-bash")
+end
+
+if File.exist?(gem_dir) && File.exist?(gem_rc)
+  create_padrino_project
+else
+  require 'fileutils'
+  FileUtils.mkdir gem_dir rescue nil
+  File.open(gem_rc, "w") do |f|
+    f.puts "PATH=~/.gem-padrino/gems/bin:\$PATH"
+    f.puts "GEM_HOME=~/.gem-padrino/gems"
+    f.puts "GEM_PATH=~/.gem-padrino/gems"
+    f.puts "export PATH; export GEM_HOME; export GEM_PATH"
+  end
+  system "source #{gem_rc}; gem install bundler padrino rake --no-rdoc --no-ri"
+  create_padrino_project
+end
