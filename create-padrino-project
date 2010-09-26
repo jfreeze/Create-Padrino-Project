@@ -32,6 +32,9 @@ else
     f.puts "GEM_PATH=~/.gem-padrino/gems"
     f.puts "export PATH; export GEM_HOME; export GEM_PATH"
   end
-  system "source #{gem_rc}; gem install bundler padrino rake --no-rdoc --no-ri"
+  cmd = "source #{gem_rc}; gem install bundler padrino rake --no-rdoc --no-ri"
+  puts '-- Setting up gem repository (one time event) --'
+  puts cmd
+  system cmd
   create_padrino_project
 end

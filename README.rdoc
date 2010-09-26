@@ -1,0 +1,59 @@
+= Create Padrino Project
+
+== What is this?
+
+create-padrino-project is a tool that creates Padrino projects.
+
+
+== Why?
+
+I wanted to use bundler, but IMO, bundler gems should be local to a project. And, there should not be any global gems available when working in a project to prevent accidental usage of said gems.
+
+But, it is a pain to set your gem environment to one with Padrino and Bundler to get a padrino Project started, then set it back to a clean environment to work in the newly created project. So, I created this little app.
+
+
+== How Does It Work?
+
+Put this app in your path and it will create a '.gem-padrino' directory in your home directory and install the necessary gems to create a Padrino project that is bundled. Then it will create your Padrino project in the local directory. Feel free to modify the 'padrino g' command to use your favorite stack options.
+
+
+  % create-padrino-project project-name
+
+  % create-padrino-project my-app
+  source ~/.gem-padrino/.gem-padrino-bash
+  padrino g project my-app
+    -t riot
+    -d sequel
+    -s jquery
+    -e haml 
+    --app=my_app
+    -c compass
+    -i
+  cd my-app
+  bundle install 
+    --path=vendor
+  bundle install 
+    --binstubs
+  ...
+  =================================================================
+  my-app is ready for development! Next, follow these steps:
+  =================================================================
+  1) cd my-app
+  2) bundle install
+  =================================================================
+  
+  Fetching source index for http://rubygems.org/
+  ...
+  Installing sequel (3.15.0) 
+  Installing sqlite3-ruby (1.3.1) with native extensions 
+  Installing thin (1.2.7) with native extensions 
+  Your bundle is complete! Use `bundle show [gemname]` to see where a bundled gem is installed.
+  
+  Your bundle was installed to `vendor`
+  Using rake (0.8.7) 
+  Using activesupport (3.0.0) 
+  Using bundler (1.0.0) 
+  ...
+  Your bundle is complete! Use `bundle show [gemname]` to see where a bundled gem is installed.
+  
+  Your bundle was installed to `vendor`
