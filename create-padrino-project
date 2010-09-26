@@ -8,7 +8,7 @@ end
 def create_padrino_project
     project      = ARGV.shift
     project_name = project.gsub(/[-.]/, '_').downcase
-    cmd          = "source ~/.gem-padrino/.gem-padrino-bash; padrino g project #{project} -t riot -d sequel -s jquery -e haml --app=#{project_name} -c compass -i; cd #{project}; bundle install --path=vendor; bundle install --binstubs"
+    cmd          = "source ~/.gem-padrino/.gem-padrino-bash; padrino g project #{project} -t riot -d sequel -s jquery -e haml -c compass -i; cd #{project}; bundle install --path=vendor; bundle install --binstubs"
     printed_cmd  = cmd.gsub(/; ?/, "\n").gsub(/\-\-(\w)/, "\n  --\\1").gsub(/ [-](\w)/, "\n  -\\1")
     puts printed_cmd
     system cmd
